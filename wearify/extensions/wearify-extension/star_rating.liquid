@@ -1,0 +1,21 @@
+{% assign avg_rating = block.settings.product.metafields.demo.avg_rating.value | round %}
+<div id="root"></div>
+{% if avg_rating >= 4 %}
+  <br>
+  <img src="{{ "thumbs-up.png" | asset_img_url: '15x' }}" height="15" width="15" loading="lazy">
+  {{ 'ratings.home.recommendationText' | t }}
+{% endif %}
+
+{% schema %}
+{
+  "name": "Star sddddddddddddddddddd",
+  "target": "section",
+  "javascript": "build/index-DB3WXcUo.js",
+  "stylesheet": "build/index-lh7pCXK1.css",
+  "settings": [
+    { "type": "product", "id": "product", "label": "product", "autofill": true },
+    { "type": "color", "id": "colour", "label": "Star Colour", "default": "#ff0000" }
+  ]
+}
+{% endschema %}
+

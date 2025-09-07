@@ -1,0 +1,6 @@
+{%- assign clamped_rating = rating | default: 0 | plus: 0 -%}
+{%- if clamped_rating < 0 -%}{%- assign clamped_rating = 0 -%}{%- endif -%}
+{%- if clamped_rating > 5 -%}{%- assign clamped_rating = 5 -%}{%- endif -%}
+{%- for i in (1..clamped_rating) -%}★{%- endfor -%}
+{%- assign next = clamped_rating | plus: 1 -%}
+{%- if next <= 5 -%}{%- for i in (next..5) -%}☆{%- endfor -%}{%- endif -%}
