@@ -1,47 +1,55 @@
 {% assign avg_rating = block.settings.product.metafields.demo.avg_rating.value | round %}
-{% assign wearify_image_url = '' %}
-{% if block.settings.custom_image != blank %}
-  {% assign wearify_image_url = block.settings.custom_image | image_url: width: 600 %}
-{% elsif block.settings.product and block.settings.product.featured_image %}
-  {% assign wearify_image_url = block.settings.product.featured_image | image_url: width: 600 %}
-{% elsif product and product.featured_image %}
-  {% assign wearify_image_url = product.featured_image | image_url: width: 600 %}
-{% endif %}
-{% assign wearify_product_title = '' %}
-{% assign wearify_product_price = 0 %}
-{% if block.settings.product %}
-  {% assign wearify_product_title = block.settings.product.title %}
-  {% if block.settings.product.selected_or_first_available_variant %}
-    {% assign wearify_product_price = block.settings.product.selected_or_first_available_variant.price %}
-  {% else %}
-    {% assign wearify_product_price = block.settings.product.price %}
+{% assign enabled_flag = false %}
+{%- if product and product.metafields.wearify.enabled -%}
+  {% assign enabled_flag = product.metafields.wearify.enabled.value %}
+{%- elsif block.settings.product and block.settings.product.metafields.wearify.enabled -%}
+  {% assign enabled_flag = block.settings.product.metafields.wearify.enabled.value %}
+{%- endif -%}
+{% if enabled_flag == true or enabled_flag == 'true' %}
+  {% assign wearify_image_url = '' %}
+  {% if block.settings.custom_image != blank %}
+    {% assign wearify_image_url = block.settings.custom_image | image_url: width: 600 %}
+  {% elsif block.settings.product and block.settings.product.featured_image %}
+    {% assign wearify_image_url = block.settings.product.featured_image | image_url: width: 600 %}
+  {% elsif product and product.featured_image %}
+    {% assign wearify_image_url = product.featured_image | image_url: width: 600 %}
   {% endif %}
-{% elsif product %}
-  {% assign wearify_product_title = product.title %}
-  {% if product.selected_or_first_available_variant %}
-    {% assign wearify_product_price = product.selected_or_first_available_variant.price %}
+  {% assign wearify_product_title = '' %}
+  {% assign wearify_product_price = 0 %}
+  {% if block.settings.product %}
+    {% assign wearify_product_title = block.settings.product.title %}
+    {% if block.settings.product.selected_or_first_available_variant %}
+      {% assign wearify_product_price = block.settings.product.selected_or_first_available_variant.price %}
+    {% else %}
+      {% assign wearify_product_price = block.settings.product.price %}
+    {% endif %}
+  {% elsif product %}
+    {% assign wearify_product_title = product.title %}
+    {% if product.selected_or_first_available_variant %}
+      {% assign wearify_product_price = product.selected_or_first_available_variant.price %}
+    {% else %}
+      {% assign wearify_product_price = product.price %}
+    {% endif %}
   {% else %}
-    {% assign wearify_product_price = product.price %}
+    {% assign wearify_product_title = block.settings.product_name_override %}
+    {% assign wearify_product_price = block.settings.product_price_override %}
   {% endif %}
-{% else %}
-  {% assign wearify_product_title = block.settings.product_name_override %}
-  {% assign wearify_product_price = block.settings.product_price_override %}
+  {% assign wearify_product_id = '' %}
+  {% if block.settings.product %}
+    {% assign wearify_product_id = block.settings.product.id %}
+  {% elsif product %}
+    {% assign wearify_product_id = product.id %}
+  {% else %}
+    {% assign wearify_product_id = block.settings.product_id_override %}
+  {% endif %}
+  <div
+    id="wearify-root"
+    data-product-id="{{ wearify_product_id }}"
+    data-product-image="{{ wearify_image_url }}"
+    data-product-name="{{ wearify_product_title | escape }}"
+    data-product-price="{{ wearify_product_price }}"
+  ></div>
 {% endif %}
-{% assign wearify_product_id = '' %}
-{% if block.settings.product %}
-  {% assign wearify_product_id = block.settings.product.id %}
-{% elsif product %}
-  {% assign wearify_product_id = product.id %}
-{% else %}
-  {% assign wearify_product_id = block.settings.product_id_override %}
-{% endif %}
-<div
-  id="wearify-root"
-  data-product-id="{{ wearify_product_id }}"
-  data-product-image="{{ wearify_image_url }}"
-  data-product-name="{{ wearify_product_title | escape }}"
-  data-product-price="{{ wearify_product_price }}"
-></div>
 {% schema %}
 {
   "name": "Wearify Try On",

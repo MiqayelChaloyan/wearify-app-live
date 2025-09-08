@@ -1,21 +1,12 @@
-{% assign avg_rating = block.settings.product.metafields.demo.avg_rating.value | round %}
-<div id="root"></div>
-{% if avg_rating >= 4 %}
-  <br>
-  <img src="{{ "thumbs-up.png" | asset_img_url: '15x' }}" height="15" width="15" loading="lazy">
-  {{ 'ratings.home.recommendationText' | t }}
+{% assign enabled_flag = false %}
+{%- if product and product.metafields.wearify.enabled -%}
+  {% assign enabled_flag = product.metafields.wearify.enabled.value %}
+{%- elsif block and block.settings and block.settings.product and block.settings.product.metafields.wearify.enabled -%}
+  {% assign enabled_flag = block.settings.product.metafields.wearify.enabled.value %}
+{%- endif -%}
+
+{% if enabled_flag == true or enabled_flag == 'true' %}
+  <div id="root"></div>
 {% endif %}
 
-{% schema %}
-{
-  "name": "Star sddddddddddddddddddd",
-  "target": "section",
-  "javascript": "build/index-DB3WXcUo.js",
-  "stylesheet": "build/index-lh7pCXK1.css",
-  "settings": [
-    { "type": "product", "id": "product", "label": "product", "autofill": true },
-    { "type": "color", "id": "colour", "label": "Star Colour", "default": "#ff0000" }
-  ]
-}
-{% endschema %}
 
