@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-export const Step2Image = styled.div`
+export const Step2Image = styled.img`
     width: 70%;
     height: 300px;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
+    object-fit: contain;
+    object-position: center;
+    display: block;
     margin: 0 auto;
 
     @media (max-width: 768px) {

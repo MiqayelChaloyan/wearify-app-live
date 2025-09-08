@@ -5,12 +5,13 @@ import { useSelector } from "react-redux";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 // styles migrated to styled-components below
+const FALLBACK_PRODUCT_IMAGE = "https://cdn.jsdelivr.net/gh/MiqayelChaloyan/wearify-app-live/assets/images/product_image.png";
 
-import product_image from "../../assets/images/product_image.png";
 
-const Step5 = () => {
+
+const Step5 = ({ productImageUrl, productName, productPrice }) => {
     const { userId, resultPath } = useSelector((state) => state.imageUpload);
-
+    
     const [url, setUrl] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -92,11 +93,11 @@ const Step5 = () => {
 
             <ProductImageContainer>
                 <img 
-                    src={'https://static.vecteezy.com/system/resources/thumbnails/047/249/331/small_2x/sweater-shirt-hoodie-isolated-png.png'} 
+                    src={productImageUrl || FALLBACK_PRODUCT_IMAGE} 
                     alt="product" 
                     loading="lazy"
                 />
-                <p>Xenia Magera Jersey Set $452</p>
+                <p>{productName} {productPrice}</p>
             </ProductImageContainer>
         </ClientImageContainer>
     )

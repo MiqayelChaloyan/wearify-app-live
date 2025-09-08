@@ -9,13 +9,15 @@ import { uploadBytes, ref as sRef } from 'firebase/storage';
 import { getGenaiData } from "../../api";
 import { setIsLoading, setResultPath, showToaster } from "../../store/slices/imageUploadSlice";
 
-import product_image from "../../assets/images/product_image.png";
+const FALLBACK_PRODUCT_IMAGE = "https://cdn.jsdelivr.net/gh/MiqayelChaloyan/wearify-app-live/assets/images/product_image.png";
+
+
 
 // styles migrated to styled-components below
 import RotatingText from "../../components/rotatingText";
 
 
-const Step4 = ({ handleNext }) => {
+const Step4 = ({ handleNext, productImageUrl }) => {
     const { uploadedImage, userId, isLoading } = useSelector((state) => state.imageUpload);
     const dispatch = useDispatch();
     const [processingStatus, setProcessingStatus] = useState('uploading');
@@ -128,7 +130,7 @@ const Step4 = ({ handleNext }) => {
                             loading="lazy"
                         />
                         <img
-                            src={product_image}
+                            src={productImageUrl || FALLBACK_PRODUCT_IMAGE}
                             alt="Product image"
                             className="comparison-image product-image"
                             loading="lazy"

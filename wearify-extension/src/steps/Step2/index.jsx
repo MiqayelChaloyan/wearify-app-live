@@ -1,11 +1,12 @@
-import image from "../../assets/images/step2.png";
+// import image from "../../assets/images/step2.png";
 import { Container, Step2Image } from './styles';
+const image = "https://cdn.jsdelivr.net/gh/MiqayelChaloyan/wearify-app-live/assets/images/step2.png";
 
 
 const Step2 = () => {
     return (
         <div>
-            <Step2Image style={{ backgroundImage: `url(${image})` }}/>
+            <Step2Image src={image} alt="We care about privacy" loading="lazy"/>
             <Container>
                 <h2>We care about privacy</h2>
                 <p>

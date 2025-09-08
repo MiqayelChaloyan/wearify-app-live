@@ -1,5 +1,5 @@
-import image from "../../assets/images/step3.png";
 import { Container, Step3Image } from './styles';
+const image = "https://cdn.jsdelivr.net/gh/MiqayelChaloyan/wearify-app-live/assets/images/step3.png";
 
 
 const Step3 = () => {
@@ -10,7 +10,7 @@ const Step3 = () => {
                 <p>In order to understand your body shape <br />
                 we need two full-length photos of you.</p>
             </Container>
-            <Step3Image style={{ backgroundImage: `url(${image})` }}/>
+            <Step3Image src={image} alt="1 full-length pic" loading="lazy"/>
             <Container>
                 <h4>For Best Results</h4>
                 <p>

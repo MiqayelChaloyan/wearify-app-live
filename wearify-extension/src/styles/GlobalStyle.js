@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
-import TimesFont from '../assets/fonts/times.ttf';
-import InterFont from '../assets/fonts/Inter_Regular.ttf';
+const TimesFont = "https://raw.githubusercontent.com/MiqayelChaloyan/wearify-app-live/main/assets/fonts/times.ttf";
+const InterFont = "https://raw.githubusercontent.com/MiqayelChaloyan/wearify-app-live/main/assets/fonts/Inter_Regular.ttf";
+
 
 export const GlobalStyle = createGlobalStyle`
   @font-face {

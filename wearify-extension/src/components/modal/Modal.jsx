@@ -9,10 +9,17 @@ import {
   ModalContent,
   ModalFooter,
   ModalNext,
+  ConfirmOverlay,
+  ConfirmContainer,
+  ConfirmTitle,
+  ConfirmText,
+  ConfirmActions,
+  ConfirmCancel,
+  ConfirmDelete,
 } from './styles';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { uploadImage, hideToaster, showToaster, resetState } from '../../store/slices/imageUploadSlice';
+import { uploadImage, hideToaster, showToaster, resetState, clearUploadedImage, clearSelectedFiles } from '../../store/slices/imageUploadSlice';
 import Toaster from '../toaster/Toaster';
 
 import { v4 as uuidv4 } from 'uuid';
@@ -20,11 +27,12 @@ import { v4 as uuidv4 } from 'uuid';
 // styles migrated to styled-components below
 
 
-const Modal = ({ isOpen, onClose, children, title, currentStepIndex, _handleBack, _handleNext, _handleGoTo }) => {
+const Modal = ({ isOpen, onClose, children, title, currentStepIndex, _handleBack, _handleNext, _handleGoTo, productImageUrl }) => {
   const { uploadedImage, userId, toaster } = useSelector((state) => state.imageUpload);
 
   const dispatch = useDispatch();
   const fileInputRef = useRef(null);
+  const [confirmOpen, setConfirmOpen] = React.useState(false);
 
 
   useEffect(() => {
@@ -108,6 +116,26 @@ const Modal = ({ isOpen, onClose, children, title, currentStepIndex, _handleBack
     _handleNext();
   }
 
+  const handleRemove = () => {
+    setConfirmOpen(true);
+  };
+
+  const handleConfirmCancel = () => setConfirmOpen(false);
+  const handleConfirmDelete = () => {
+    try {
+      if (uploadedImage && uploadedImage.startsWith('blob:')) {
+        URL.revokeObjectURL(uploadedImage);
+      }
+      dispatch(clearUploadedImage());
+      dispatch(clearSelectedFiles());
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    } finally {
+      setConfirmOpen(false);
+    }
+  };
+
   const _handleTryAgain = () => {
     _handleGoTo(0);
     dispatch(resetState());
@@ -129,6 +157,7 @@ const Modal = ({ isOpen, onClose, children, title, currentStepIndex, _handleBack
             handleBack: _handleBack, 
             handleNext: _handleNext, 
             handleGoTo: _handleGoTo,
+            productImageUrl,
             ...(currentStepIndex === 3 ? { handleNext: _handleNext } : {}),
             ...(currentStepIndex === 4 ? { handleGoTo: _handleGoTo } : {})
           })}
@@ -145,9 +174,14 @@ const Modal = ({ isOpen, onClose, children, title, currentStepIndex, _handleBack
           ) : currentStepIndex === 2 ? (
             <>
              {uploadedImage && userId ? (
-              <ModalNext onClick={handleNext}>
-                Next
-              </ModalNext>
+              <>
+                <ModalNext onClick={handleRemove}>
+                  Remove
+                </ModalNext>
+                <ModalNext onClick={handleNext}>
+                  Next
+                </ModalNext>
+              </>
              ) : (
              <>
               <ModalNext onClick={_handleUpload}>
@@ -174,6 +208,21 @@ const Modal = ({ isOpen, onClose, children, title, currentStepIndex, _handleBack
         isVisible={toaster.isVisible}
         onClose={() => dispatch(hideToaster())}
       />
+
+      {confirmOpen && (
+        <ConfirmOverlay>
+          <ConfirmContainer>
+            <ConfirmTitle>Remove uploaded image?</ConfirmTitle>
+            <ConfirmText>
+              This will clear the selected image so you can upload a new one.
+            </ConfirmText>
+            <ConfirmActions>
+              <ConfirmCancel onClick={handleConfirmCancel}>Cancel</ConfirmCancel>
+              <ConfirmDelete onClick={handleConfirmDelete}>Delete</ConfirmDelete>
+            </ConfirmActions>
+          </ConfirmContainer>
+        </ConfirmOverlay>
+      )}
     </ModalOverlay>
   );
 };

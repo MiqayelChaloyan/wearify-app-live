@@ -86,6 +86,7 @@ export const {
     setSelectedFiles,
     clearSelectedFiles,
     removeFile,
+    clearUploadedImage,
     setUploadProgress,
     clearError,
     clearSuccess,

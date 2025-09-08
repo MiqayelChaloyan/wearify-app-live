@@ -25,6 +25,9 @@ function App() {
 
   const el = document.getElementById('wearify-root');
   const productId = el?.dataset.productId;
+  const imageUrl = el?.dataset.productImage || '';
+  const productName = el?.dataset.productName || '';
+  const productPrice = el?.dataset.productPrice || '';
 
   
     const [isSmallModalOpen, setIsSmallModalOpen] = useState(false);
@@ -114,6 +117,9 @@ function App() {
           _handleBack={back}
           _handleNext={next}
           _handleGoTo={goTo}
+          productImageUrl={imageUrl}
+          productName={productName}
+          productPrice={productPrice}
         >
           {step}
         </Modal>

@@ -65,6 +65,7 @@ export const ImageWrapper = styled.div`
     object-fit: contain;
     border: 4px solid #9D9D9D;
     border-radius: 30px;
+    background-color: #f0f0f0;
   }
 
   .uploaded-image {
