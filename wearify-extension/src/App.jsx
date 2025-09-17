@@ -24,13 +24,18 @@ function App() {
 
 
   const el = document.getElementById('wearify-root');
+  console.log('Element:', el);
+  console.log('Dataset:', el?.dataset);
+  console.log('All attributes:', el ? Array.from(el.attributes).map(attr => `${attr.name}="${attr.value}"`) : 'No element');
+  
   const productId = el?.dataset.productId;
   const imageUrl = el?.dataset.productImage || '';
-  const productName = el?.dataset.productName || '';
+  const productName = el?.dataset.productName || ''; //data-product-name
   const productPrice = el?.dataset.productPrice || '';
   const apiKey = el?.dataset.apiKey || ''; // TODO: add api key to the root element
 
   console.log(apiKey, 'apiKey');
+  console.log(productName, 'productName');
   
     const [isSmallModalOpen, setIsSmallModalOpen] = useState(false);
     const [buttonTop, setButtonTop] = useState(typeof window !== 'undefined' && window.innerHeight * 0.45);

@@ -27,7 +27,7 @@ import { v4 as uuidv4 } from 'uuid';
 // styles migrated to styled-components below
 
 
-const Modal = ({ isOpen, onClose, children, title, currentStepIndex, _handleBack, _handleNext, _handleGoTo, productImageUrl }) => {
+const Modal = ({ isOpen, onClose, children, title, currentStepIndex, _handleBack, _handleNext, _handleGoTo, productImageUrl, productName, productPrice }) => {
   const { uploadedImage, userId, toaster } = useSelector((state) => state.imageUpload);
 
   const dispatch = useDispatch();
@@ -158,6 +158,8 @@ const Modal = ({ isOpen, onClose, children, title, currentStepIndex, _handleBack
             handleNext: _handleNext, 
             handleGoTo: _handleGoTo,
             productImageUrl,
+            productName,
+            productPrice,
             ...(currentStepIndex === 3 ? { handleNext: _handleNext } : {}),
             ...(currentStepIndex === 4 ? { handleGoTo: _handleGoTo } : {})
           })}

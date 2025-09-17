@@ -10,6 +10,7 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 
 const Step5 = ({ productImageUrl, productName, productPrice }) => {
+    console.log(productName, 'productName ___________');
     const { userId, resultPath } = useSelector((state) => state.imageUpload);
     
     const [url, setUrl] = useState('');
