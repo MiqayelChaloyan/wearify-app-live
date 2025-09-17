@@ -48,6 +48,7 @@
     data-product-image="{{ wearify_image_url }}"
     data-product-name="{{ wearify_product_title | escape }}"
     data-product-price="{{ wearify_product_price }}"
+    data-api-key="{{ product.metafields.wearify.key | default: block.settings.product.metafields.wearify.key }}"
   ></div>
 {% endif %}
 {% schema %}

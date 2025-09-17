@@ -6,7 +6,7 @@
 {%- endif -%}
 
 {% if enabled_flag == true or enabled_flag == 'true' %}
-  <div id="root"></div>
+  <div id="root" data-api-key="{{ product.metafields.wearify.key | default: block.settings.product.metafields.wearify.key }}"></div>
 {% endif %}
 
 

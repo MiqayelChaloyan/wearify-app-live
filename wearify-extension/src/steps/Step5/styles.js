@@ -94,12 +94,14 @@ export const ProductImageContainer = styled.div`
     font-weight: 400;
     color: #000000;
     text-align: center;
-    font-family: 'Times', serif;
+    font-family: Times New Roman, serif;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+    vertical-align: middle;
+    font-family: Times New Roman, serif;
   }
 
   @media (max-width: 768px) {

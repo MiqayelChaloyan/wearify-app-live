@@ -9,19 +9,24 @@ export const Container = styled.div`
   padding: 30px;
 
   h2 {
-    font-size: 27px;
-    font-weight: 400;
-    color: #000000;
-    text-align: center;
-    font-family: 'Times', serif;
+        font-size: 32.5px;
+        font-weight: 400;
+        color: #000000;
+        text-align: center;
+        letter-spacing: -0.02em;
+        line-height: 100%;
+        vertical-align: middle;
+        font-family: Times New Roman, serif;
   }
 
   p {
-    font-size: 15px;
-    font-weight: 400;
-    color: #000000;
-    text-align: center;
-    font-family: 'Times', serif;
+        font-size: 16.1px;
+        line-height: 19.32px;
+        font-weight: 400;
+        color: #000000;
+        text-align: center;
+        vertical-align: middle;
+        font-family: Times New Roman, serif;
   }
 
   @media (max-width: 768px) {

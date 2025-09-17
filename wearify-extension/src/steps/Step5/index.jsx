@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 // styles migrated to styled-components below
-const FALLBACK_PRODUCT_IMAGE = "https://cdn.jsdelivr.net/gh/MiqayelChaloyan/wearify-app-live/assets/images/product_image.png";
+// const FALLBACK_PRODUCT_IMAGE = "https://cdn.jsdelivr.net/gh/MiqayelChaloyan/wearify-app-live/assets/images/product_image.png";
 
 
 
@@ -93,7 +93,7 @@ const Step5 = ({ productImageUrl, productName, productPrice }) => {
 
             <ProductImageContainer>
                 <img 
-                    src={productImageUrl || FALLBACK_PRODUCT_IMAGE} 
+                    src={productImageUrl} 
                     alt="product" 
                     loading="lazy"
                 />

@@ -58,10 +58,12 @@ export const ModalDivider = styled.div`
 
 export const ModalTitle = styled.h3`
   margin: 0;
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 400;
   color: #9D9D9D;
-  font-family: 'Inter', serif;
+  font-family: Inter, serif;
+  letter-spacing: -0.02em;
+  line-height: 100%;
 
   @media (max-width: 768px) {
     font-size: 14px;
@@ -121,15 +123,17 @@ export const ModalNext = styled.button`
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
-  font-size: 15px;
+  font-size: 15.2px;
   font-weight: 600;
   width: 153px;
   height: 50px;
   display: flex;
   align-items: center;
+  letter-spacing: -0.02em;
+  line-height: 100%;
   justify-content: center;
   cursor: pointer;
-  font-family: 'Times', serif;
+  font-family: Times New Roman, Regular;
 
   @media (max-width: 768px) {
     width: 100%;

@@ -28,7 +28,9 @@ function App() {
   const imageUrl = el?.dataset.productImage || '';
   const productName = el?.dataset.productName || '';
   const productPrice = el?.dataset.productPrice || '';
+  const apiKey = el?.dataset.apiKey || ''; // TODO: add api key to the root element
 
+  console.log(apiKey, 'apiKey');
   
     const [isSmallModalOpen, setIsSmallModalOpen] = useState(false);
     const [buttonTop, setButtonTop] = useState(typeof window !== 'undefined' && window.innerHeight * 0.45);

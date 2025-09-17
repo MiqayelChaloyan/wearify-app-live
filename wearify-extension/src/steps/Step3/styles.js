@@ -24,27 +24,35 @@ export const Container = styled.div`
     padding: 30px;
 
     h2 {
-        font-size: 25px;
+        font-size: 32.5px;
         font-weight: 400;
         color: #000000;
         text-align: center;
-        font-family: 'Times', serif;
+        letter-spacing: -0.02em;
+        line-height: 100%;
+        vertical-align: middle;
+        font-family: Times New Roman, serif;
     }
 
     p {
-        font-size: 14px;
+        font-size: 16.1px;
+        line-height: 19.32px;
         font-weight: 400;
         color: #000000;
         text-align: center;
-        font-family: 'Times', serif;
+        vertical-align: middle;
+        font-family: Times New Roman, serif;
     }
 
     h4 {
-        font-size: 14px;
+        font-size: 12.5px;
         font-weight: 400;
         color: #000000;
         text-align: center;
-        font-family: 'Times', serif;
+        letter-spacing: -0.02em;
+        line-height: 100%;
+        vertical-align: middle;
+        font-family: Times New Roman, serif;
     }
 
     @media (max-width: 768px) {

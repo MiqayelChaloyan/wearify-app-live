@@ -55,6 +55,7 @@ export const action = async ({ request }) => {
   if (intent === "toggle-mult") {
     const ids = JSON.parse(formData.get("ids") || "[]");
     const enable = formData.get("enable") === "true";
+    const apiKey = formData.get("apiKey");
     if (Array.isArray(ids) && ids.length > 0) {
       const metafieldUpsert = await admin.graphql(
         `#graphql
@@ -67,13 +68,24 @@ export const action = async ({ request }) => {
         `,
         {
           variables: {
-            metafields: ids.map((gid) => ({
-              ownerId: gid,
-              namespace: "wearify",
-              key: "enabled",
-              type: "boolean",
-              value: enable ? "true" : "false",
-            })),
+            metafields: [
+              ...ids.map((gid) => ({
+                ownerId: gid,
+                namespace: "wearify",
+                key: "enabled",
+                type: "boolean",
+                value: enable ? "true" : "false",
+              })),
+              ...(apiKey
+                ? ids.map((gid) => ({
+                    ownerId: gid,
+                    namespace: "wearify",
+                    key: "key",
+                    type: "single_line_text_field",
+                    value: String(apiKey),
+                  }))
+                : []),
+            ],
           },
         },
       );
@@ -171,6 +183,10 @@ export default function Index() {
       form.append("intent", "toggle-mult");
       form.append("ids", JSON.stringify(ids));
       form.append("enable", String(enable));
+      try {
+        const k = window.localStorage.getItem("wearify_api_key");
+        if (k) form.append("apiKey", k);
+      } catch { }
       fetcher.submit(form, { method: "POST", navigate: false, preventScrollReset: true, replace: true });
     },
     [fetcher],
