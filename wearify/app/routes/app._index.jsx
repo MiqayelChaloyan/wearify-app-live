@@ -14,9 +14,10 @@ import { authenticate } from "../shopify.server";
 import ProductTodoList from "../components/ProductTodoList";
 import ImageStep from "../components/ImageStep";
 import InstallExtensionStep from "../components/InstallExtensionStep";
+import prisma from "../db.server";
 
 export const loader = async ({ request }) => {
-  const { admin } = await authenticate.admin(request);
+  const { admin, session } = await authenticate.admin(request);
   const response = await admin.graphql(
     `#graphql
       query appProductsForTodos {
@@ -45,13 +46,35 @@ export const loader = async ({ request }) => {
   const responseJson = await response.json();
   const products = responseJson?.data?.products?.nodes ?? [];
 
-  return { products };
+  // Get the wearify_api_key from the database
+  const shopSettings = await prisma.shopSettings.findUnique({
+    where: { shop: session.shop },
+    select: { wearifyApiKey: true }
+  });
+
+  return { products, wearifyApiKey: shopSettings?.wearifyApiKey || null };
 };
 
 export const action = async ({ request }) => {
-  const { admin } = await authenticate.admin(request);
+  const { admin, session } = await authenticate.admin(request);
   const formData = await request.formData();
   const intent = formData.get("intent");
+  
+  if (intent === "save-api-key") {
+    const apiKey = formData.get("apiKey");
+    if (apiKey) {
+      await prisma.shopSettings.upsert({
+        where: { shop: session.shop },
+        update: { wearifyApiKey: apiKey },
+        create: { 
+          shop: session.shop,
+          wearifyApiKey: apiKey 
+        }
+      });
+    }
+    return { ok: true };
+  }
+  
   if (intent === "toggle-mult") {
     const ids = JSON.parse(formData.get("ids") || "[]");
     const enable = formData.get("enable") === "true";
@@ -157,7 +180,7 @@ export const action = async ({ request }) => {
 };
 
 export default function Index() {
-  const { products } = useLoaderData();
+  const { products, wearifyApiKey } = useLoaderData();
   const fetcher = useFetcher();
   const shopify = useAppBridge();
   const isLoading =
@@ -183,13 +206,12 @@ export default function Index() {
       form.append("intent", "toggle-mult");
       form.append("ids", JSON.stringify(ids));
       form.append("enable", String(enable));
-      try {
-        const k = window.localStorage.getItem("wearify_api_key");
-        if (k) form.append("apiKey", k);
-      } catch { }
+      if (wearifyApiKey) {
+        form.append("apiKey", wearifyApiKey);
+      }
       fetcher.submit(form, { method: "POST", navigate: false, preventScrollReset: true, replace: true });
     },
-    [fetcher],
+    [fetcher, wearifyApiKey],
   );
 
   const toggleEnabled = useCallback(
@@ -203,19 +225,20 @@ export default function Index() {
   const [apiKeyInput, setApiKeyInput] = useState("");
 
   useEffect(() => {
-    try {
-      const savedKey = window.localStorage.getItem("wearify_api_key");
-      if (savedKey) setApiKeyInput(savedKey);
-    } catch { }
-  }, []);
+    if (wearifyApiKey) {
+      setApiKeyInput(wearifyApiKey);
+      setStep(2);
+    }
+  }, [wearifyApiKey]);
 
   const handleNext = useCallback(() => {
     if (!apiKeyInput?.trim()) return;
-    try {
-      window.localStorage.setItem("wearify_api_key", apiKeyInput.trim());
-    } catch { }
+    const form = new FormData();
+    form.append("intent", "save-api-key");
+    form.append("apiKey", apiKeyInput.trim());
+    fetcher.submit(form, { method: "POST", navigate: false, preventScrollReset: true, replace: true });
     setStep(2);
-  }, [apiKeyInput]);
+  }, [apiKeyInput, fetcher]);
 
   return (
     <Page>
@@ -231,6 +254,7 @@ export default function Index() {
                 onChange={setApiKeyInput}
                 autoComplete="off"
                 placeholder="Enter your key"
+                id="wearify-api-key"
               />
               <InlineStack gap="300">
                 <Button primary onClick={handleNext} disabled={!apiKeyInput?.trim()}>Next</Button>

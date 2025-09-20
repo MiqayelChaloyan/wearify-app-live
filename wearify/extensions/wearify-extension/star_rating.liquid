@@ -117,14 +117,70 @@
   ></div>
   
   <script>
-    // Pass data from Liquid to JavaScript
-    window.wearifyData = {
-      productId: "{{ wearify_product_id }}",
-      productImage: "{{ wearify_image_url }}",
-      productName: "{{ wearify_product_title | escape }}",
-      apiKey: "{{ wearify_api_key }}",
-      previewKey: "{{ wearify_preview_key }}"
-    };
+    // Function to fetch API key from the app
+    async function fetchWearifyApiKey() {
+      try {
+        console.log('Fetching Wearify API key...');
+        // Get shop from the current domain
+        const shop = window.location.hostname.replace('.myshopify.com', '');
+        const response = await fetch(`/apps/wearify/api/public/wearify-key?shop=${shop}`, {
+          method: 'GET'
+        });
+        console.log('Response status:', response.status);
+        
+        if (response.ok) {
+          const data = await response.json();
+          console.log('API key response:', data);
+          return data.apiKey;
+        } else {
+          console.log('API call failed, using fallback');
+          return null;
+        }
+      } catch (error) {
+        console.error('Failed to fetch Wearify API key:', error);
+        return null;
+      }
+    }
+
+    // Initialize Wearify data
+    async function initializeWearifyData() {
+      console.log('Initializing Wearify data...');
+      const apiKey = await fetchWearifyApiKey();
+      console.log('Fetched API key:', apiKey);
+      
+      // Pass data from Liquid to JavaScript
+      window.wearifyData = {
+        productId: "{{ wearify_product_id }}",
+        productImage: "{{ wearify_image_url }}",
+        productName: "{{ wearify_product_title | escape }}",
+        apiKey: apiKey || "{{ wearify_api_key }}", // Fallback to metafield if API call fails
+        previewKey: "{{ wearify_preview_key }}"
+      };
+      
+      // Update the data attribute on the root element
+      const rootElement = document.getElementById('wearify-root');
+      if (rootElement) {
+        console.log('Root element found, current data-api-key:', rootElement.getAttribute('data-api-key'));
+        if (apiKey) {
+          rootElement.setAttribute('data-api-key', apiKey);
+          console.log('Updated data-api-key to:', apiKey);
+          // Also update the window.wearifyData object
+          window.wearifyData.apiKey = apiKey;
+          console.log('Updated window.wearifyData.apiKey to:', apiKey);
+        } else {
+          console.log('No API key received, keeping current value:', rootElement.getAttribute('data-api-key'));
+        }
+      } else {
+        console.error('Root element not found');
+      }
+    }
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeWearifyData);
+    } else {
+      initializeWearifyData();
+    }
   </script>
 {% endif %}
 
