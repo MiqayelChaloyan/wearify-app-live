@@ -15,12 +15,24 @@
     {% assign wearify_image_url = product.featured_image | image_url: width: 600 %}
   {% endif %}
   {% assign wearify_product_title = '' %}
+  {% assign wearify_product_price = 0 %}
   {% if block.settings.product %}
     {% assign wearify_product_title = block.settings.product.title %}
+    {% if block.settings.product.selected_or_first_available_variant %}
+      {% assign wearify_product_price = block.settings.product.selected_or_first_available_variant.price %}
+    {% else %}
+      {% assign wearify_product_price = block.settings.product.price %}
+    {% endif %}
   {% elsif product %}
     {% assign wearify_product_title = product.title %}
+    {% if product.selected_or_first_available_variant %}
+      {% assign wearify_product_price = product.selected_or_first_available_variant.price %}
+    {% else %}
+      {% assign wearify_product_price = product.price %}
+    {% endif %}
   {% else %}
     {% assign wearify_product_title = block.settings.product_name_override %}
+    {% assign wearify_product_price = block.settings.product_price_override %}
   {% endif %}
   
   {% comment %} Debug: Check if we have product title {% endcomment %}
@@ -30,16 +42,6 @@
       {% assign wearify_product_title = page_title | split: ' - ' | first %}
     {% elsif page_title %}
       {% assign wearify_product_title = page_title %}
-    {% endif %}
-    
-    {% comment %} Additional fallback: try to get from product handle or other sources {% endcomment %}
-    {% if wearify_product_title == blank and product.handle %}
-      {% assign wearify_product_title = product.handle | replace: '-', ' ' | capitalize %}
-    {% endif %}
-    
-    {% comment %} Final fallback: use a default title {% endcomment %}
-    {% if wearify_product_title == blank %}
-      {% assign wearify_product_title = 'Product' %}
     {% endif %}
   {% endif %}
   {% assign wearify_product_id = '' %}
@@ -53,39 +55,19 @@
   
   {% comment %} Get API key with multiple fallbacks {% endcomment %}
   {% assign wearify_api_key = '' %}
-  
-  {% comment %} Debug: Check what metafields are available {% endcomment %}
-  <!-- Debug: Product metafields available: {{ product.metafields | map: 'key' | join: ', ' }} -->
-  <!-- Debug: Block product metafields available: {{ block.settings.product.metafields | map: 'key' | join: ', ' }} -->
-  
   {% if block.settings.api_key_override != blank %}
     {% assign wearify_api_key = block.settings.api_key_override %}
-    <!-- Debug: Using API key override -->
   {% elsif product and product.metafields.wearify.key %}
     {% assign wearify_api_key = product.metafields.wearify.key.value %}
-    <!-- Debug: Using product metafield API key -->
   {% elsif block.settings.product and block.settings.product.metafields.wearify.key %}
     {% assign wearify_api_key = block.settings.product.metafields.wearify.key.value %}
-    <!-- Debug: Using block product metafield API key -->
-  {% endif %}
-  
-  {% comment %} Debug: Check API key extraction {% endcomment %}
-  {% if wearify_api_key == blank %}
-    <!-- Debug: API key is blank, trying alternative methods -->
-    {% comment %} Try alternative metafield access methods {% endcomment %}
-    {% if product and product.metafields.wearify.key.value %}
-      {% assign wearify_api_key = product.metafields.wearify.key.value %}
-      <!-- Debug: Found API key via alternative product method -->
-    {% elsif block.settings.product and block.settings.product.metafields.wearify.key.value %}
-      {% assign wearify_api_key = block.settings.product.metafields.wearify.key.value %}
-      <!-- Debug: Found API key via alternative block product method -->
-    {% endif %}
   {% endif %}
   
   {% comment %} Debug output - remove in production {% endcomment %}
   <!-- Wearify Debug: Product Title = "{{ wearify_product_title }}" -->
   <!-- Wearify Debug: Product ID = "{{ wearify_product_id }}" -->
   <!-- Wearify Debug: Product Image = "{{ wearify_image_url }}" -->
+  <!-- Wearify Debug: Product Price = "{{ wearify_product_price }}" -->
   <!-- Wearify Debug: API Key = "{{ wearify_api_key }}" -->
   
   <div
@@ -93,6 +75,7 @@
     data-product-id="{{ wearify_product_id }}"
     data-product-image="{{ wearify_image_url }}"
     data-product-name="{{ wearify_product_title | escape }}"
+    data-product-price="{{ wearify_product_price }}"
     data-api-key="{{ wearify_api_key }}"
   ></div>
 {% endif %}
@@ -105,6 +88,7 @@
     { "type": "product", "id": "product", "label": "product", "autofill": true },
     { "type": "text", "id": "product_id_override", "label": "Fallback product ID" },
     { "type": "text", "id": "product_name_override", "label": "Fallback product name" },
+    { "type": "text", "id": "product_price_override", "label": "Fallback product price (in cents)" },
     { "type": "text", "id": "api_key_override", "label": "API Key Override (optional)" },
     { "type": "color", "id": "colour", "label": "Star Colour", "default": "#ff0000" },
     { "type": "image_picker", "id": "custom_image", "label": "Override image" }

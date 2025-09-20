@@ -43,6 +43,25 @@
     {% assign wearify_product_id = product.id %}
   {% endif %}
   
+  {% comment %} Additional fallback: try to get product ID from URL query parameters {% endcomment %}
+  {% if wearify_product_id == blank %}
+    {% comment %} Try to extract product ID from URL query parameters {% endcomment %}
+    {% if request.query.product_id != blank %}
+      {% assign wearify_product_id = request.query.product_id %}
+    {% elsif request.query.id != blank %}
+      {% assign wearify_product_id = request.query.id %}
+    {% elsif request.page_type == 'product' and request.path contains '/products/' %}
+      {% assign product_handle = request.path | split: '/products/' | last | split: '?' | first %}
+      {% comment %} This is a fallback - in a real scenario, you'd need to look up the product by handle {% endcomment %}
+      {% assign wearify_product_id = 'fallback-' | append: product_handle %}
+    {% endif %}
+  {% endif %}
+  
+  {% comment %} Final fallback: use a default product ID {% endcomment %}
+  {% if wearify_product_id == blank %}
+    {% assign wearify_product_id = 'default-product' %}
+  {% endif %}
+  
   {% comment %} Get API key with fallbacks {% endcomment %}
   {% assign wearify_api_key = '' %}
   
@@ -71,11 +90,22 @@
     {% endif %}
   {% endif %}
   
+  {% comment %} Get preview key from URL query parameter {% endcomment %}
+  {% assign wearify_preview_key = '' %}
+  {% if request.query.preview_key != blank %}
+    {% assign wearify_preview_key = request.query.preview_key %}
+  {% elsif product and product.metafields.wearify.preview_key %}
+    {% assign wearify_preview_key = product.metafields.wearify.preview_key.value %}
+  {% elsif block and block.settings and block.settings.product and block.settings.product.metafields.wearify.preview_key %}
+    {% assign wearify_preview_key = block.settings.product.metafields.wearify.preview_key.value %}
+  {% endif %}
+  
   {% comment %} Debug output - remove in production {% endcomment %}
   <!-- Wearify Debug: Product Title = "{{ wearify_product_title }}" -->
   <!-- Wearify Debug: Product ID = "{{ wearify_product_id }}" -->
   <!-- Wearify Debug: Product Image = "{{ wearify_image_url }}" -->
   <!-- Wearify Debug: API Key = "{{ wearify_api_key }}" -->
+  <!-- Wearify Debug: Preview Key = "{{ wearify_preview_key }}" -->
   
   <div 
     id="wearify-root"
@@ -83,7 +113,19 @@
     data-product-image="{{ wearify_image_url }}"
     data-product-name="{{ wearify_product_title | escape }}"
     data-api-key="{{ wearify_api_key }}"
+    data-preview-key="{{ wearify_preview_key }}"
   ></div>
+  
+  <script>
+    // Pass data from Liquid to JavaScript
+    window.wearifyData = {
+      productId: "{{ wearify_product_id }}",
+      productImage: "{{ wearify_image_url }}",
+      productName: "{{ wearify_product_title | escape }}",
+      apiKey: "{{ wearify_api_key }}",
+      previewKey: "{{ wearify_preview_key }}"
+    };
+  </script>
 {% endif %}
 
 

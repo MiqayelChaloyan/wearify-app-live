@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { FloatingButton } from './App.styles.js'
 
 
@@ -24,10 +24,6 @@ function App() {
 
 
   const el = document.getElementById('wearify-root');
-  console.log('Element:', el);
-  console.log('Dataset:', el?.dataset);
-  console.log('All attributes:', el ? Array.from(el.attributes).map(attr => `${attr.name}="${attr.value}"`) : 'No element');
-  
   const productId = el?.dataset.productId;
   const imageUrl = el?.dataset.productImage || '';
   const productName = el?.dataset.productName || ''; //data-product-name
@@ -128,7 +124,7 @@ function App() {
           productName={productName}
           productPrice={productPrice}
         >
-          {step}
+          {React.cloneElement(step, { productName })}
         </Modal>
   
       </>

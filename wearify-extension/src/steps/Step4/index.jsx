@@ -17,12 +17,41 @@ const FALLBACK_PRODUCT_IMAGE = "https://cdn.jsdelivr.net/gh/MiqayelChaloyan/wear
 import RotatingText from "../../components/rotatingText";
 
 
-const Step4 = ({ handleNext, productImageUrl }) => {
+
+const clothIds = [
+    {
+        id: 'black_jacket',
+        name: 'Black Jacket'
+    },
+    {
+        id: 'brown_jacket',
+        name: 'Brown Jacket'
+    },
+    {
+        id: 'white_jacket',
+        name: 'White Jacket'
+    },
+    {
+        id: 'dior',
+        name: 'Dior'
+    },
+]
+
+
+const Step4 = ({ handleNext, productImageUrl, productName }) => {
     const { uploadedImage, userId, isLoading } = useSelector((state) => state.imageUpload);
     const dispatch = useDispatch();
     const [processingStatus, setProcessingStatus] = useState('uploading');
 
-    const clothId = '1';
+    // Find the matching clothId based on productName
+    const findClothId = (productName) => {
+        const matchedCloth = clothIds.find(cloth => 
+            cloth.name.toLowerCase() === productName.toLowerCase()
+        );
+        return matchedCloth ? matchedCloth.id : 'brown_jacket'; // fallback to default
+    };
+
+    const clothId = findClothId(productName);
 
     const _handleSet = async () => {
         try {
