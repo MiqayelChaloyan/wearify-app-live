@@ -1,5 +1,4 @@
 import { Container, Step1Image } from './styles';
-const image = "https://cdn.jsdelivr.net/gh/MiqayelChaloyan/wearify-app-live/assets/images/step1.png";
 
 
 const Step1 = () => {
@@ -12,7 +11,7 @@ const Step1 = () => {
                     explore new looks and find clothes you'll love.
                 </p>
             </Container>
-            <Step1Image src={image} alt="Create your likeness" loading="lazy" />
+            <Step1Image src={step1Image} alt="Create your likeness" loading="lazy" />
         </div>
     )
 }
