@@ -14,9 +14,9 @@ export const ClientImageContainer = styled.div`
 `;
 
 export const ClientImage = styled.img`
-  width: 100%;
+  width: 80%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 `;
 
 const spin = keyframes`

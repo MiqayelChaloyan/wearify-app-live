@@ -9,24 +9,27 @@ export const Container = styled.div`
   padding: 30px;
 
   h2 {
-        font-size: 32.5px;
+        font-size: 36px;
         font-weight: 400;
         color: #000000;
         text-align: center;
         letter-spacing: -0.02em;
-        line-height: 100%;
+        line-height: 1.1;
         vertical-align: middle;
         font-family: Times New Roman, serif;
+        margin: 0;
   }
 
   p {
-        font-size: 16.1px;
-        line-height: 19.32px;
+        font-size: 16px;
+        line-height: 1.4;
         font-weight: 400;
         color: #000000;
         text-align: center;
         vertical-align: middle;
-        font-family: Times New Roman, serif;
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        max-width: 500px;
   }
 
   @media (max-width: 768px) {
@@ -34,12 +37,12 @@ export const Container = styled.div`
     gap: 12px;
 
     h2 {
-      font-size: 22px;
-      line-height: 1.3;
+      font-size: 28px;
+      line-height: 1.2;
     }
 
     p {
-      font-size: 13px;
+      font-size: 14px;
       line-height: 1.4;
     }
   }

@@ -1,5 +1,5 @@
 import { Container, Step1Image } from './styles';
-
+import { step1Image as image } from '../../constants';
 
 const Step1 = () => {
     return (
@@ -11,7 +11,7 @@ const Step1 = () => {
                     explore new looks and find clothes you'll love.
                 </p>
             </Container>
-            <Step1Image src={step1Image} alt="Create your likeness" loading="lazy" />
+            <Step1Image src={image} alt="Create your likeness" loading="lazy" />
         </div>
     )
 }

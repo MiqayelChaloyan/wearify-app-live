@@ -52,7 +52,7 @@ export const ModalHeader = styled.div`
 `;
 
 export const ModalDivider = styled.div`
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 2px solid #e5e7eb;
   margin: 0 24px;
 `;
 

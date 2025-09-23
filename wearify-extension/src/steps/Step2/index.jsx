@@ -1,7 +1,6 @@
 // import image from "../../assets/images/step2.png";
 import { Container, Step2Image } from './styles';
-const image = "https://cdn.jsdelivr.net/gh/MiqayelChaloyan/wearify-app-live/assets/images/step2.png";
-
+import { step2Image as image } from '../../constants';
 
 const Step2 = () => {
     return (

@@ -20,8 +20,8 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 30px;
+    gap: 0;
+    padding: 0;
 
     h2 {
         font-size: 32.5px;

@@ -9,8 +9,7 @@ import { uploadBytes, ref as sRef } from 'firebase/storage';
 import { getGenaiData } from "../../api";
 import { setIsLoading, setResultPath, showToaster } from "../../store/slices/imageUploadSlice";
 
-const FALLBACK_PRODUCT_IMAGE = "https://cdn.jsdelivr.net/gh/MiqayelChaloyan/wearify-app-live/assets/images/product_image.png";
-
+import { step4Image } from '../../constants';
 
 
 // styles migrated to styled-components below
@@ -159,7 +158,7 @@ const Step4 = ({ handleNext, productImageUrl, productName }) => {
                             loading="lazy"
                         />
                         <img
-                            src={productImageUrl || FALLBACK_PRODUCT_IMAGE}
+                            src={productImageUrl || step4Image}
                             alt="Product image"
                             className="comparison-image product-image"
                             loading="lazy"
