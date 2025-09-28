@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
 export const Step1Image = styled.img`
-    width: 70%;
+    width: 90%;
     height: 300px;
     object-fit: contain;
     object-position: center;
     display: block;
     margin: 0 auto;
+    text-align: center;
 
     @media (max-width: 768px) {
         width: min(90%, calc(100vw - 32px));
@@ -21,7 +22,7 @@ export const Container = styled.div`
     align-items: center;
     justify-content: center;
     gap: 0;
-    padding: 0;
+    padding: 60px 0;
 
     h2 {
         font-size: 32.5px;
@@ -29,19 +30,19 @@ export const Container = styled.div`
         color: #000000;
         text-align: center;
         letter-spacing: -0.02em;
-        line-height: 100%;
-        vertical-align: middle;
-        font-family: Times New Roman, serif;
+        line-height: 1.2;
+        margin: 0;
+        font-family: Times New Roman, serif !important;
     }
 
     p {
         font-size: 16.1px;
-        line-height: 19.32px;
+        line-height: 1.2;
         font-weight: 400;
         color: #000000;
         text-align: center;
-        vertical-align: middle;
-        font-family: Times New Roman, serif;
+        margin: 0;
+        font-family: Times New Roman, serif !important;
     }
 
     @media (max-width: 768px) {

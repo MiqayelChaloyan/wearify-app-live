@@ -4,8 +4,18 @@ import { step2Image as image } from '../../constants';
 
 const Step2 = () => {
     return (
-        <div>
-            <Step2Image src={image} alt="We care about privacy" loading="lazy"/>
+        <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            minHeight: '60vh',
+            textAlign: 'center'
+        }}>
+          
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Step2Image src={image} alt="We care about privacy" loading="lazy"/>
+            </div>
             <Container>
                 <h2>We care about privacy</h2>
                 <p>

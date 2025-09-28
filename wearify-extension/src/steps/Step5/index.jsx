@@ -76,31 +76,40 @@ const Step5 = ({ productImageUrl, productName, productPrice }) => {
     }
 
     return (
-        <ClientImageContainer>
-            {url ? (
-                <ClientImage
-                    src={url}
-                    alt="AI-generated look result"
-                    loading="lazy"
-                />
-            ) : (
-                <ErrorContainer>
-                    <p style={{ color: '#666' }}>No result image available yet.</p>
-                    <p style={{ fontSize: '14px', color: '#999' }}>
-                        Please wait for the AI processing to complete.
-                    </p>
-                </ErrorContainer>
-            )}
+        <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            minHeight: '60vh',
+            textAlign: 'center'
+        }}>
+            <ClientImageContainer>
+                {url ? (
+                    <ClientImage
+                        src={url}
+                        alt="AI-generated look result"
+                        loading="lazy"
+                    />
+                ) : (
+                    <ErrorContainer>
+                        <p style={{ color: '#666' }}>No result image available yet.</p>
+                        <p style={{ fontSize: '14px', color: '#999' }}>
+                            Please wait for the AI processing to complete.
+                        </p>
+                    </ErrorContainer>
+                )}
 
-            <ProductImageContainer>
-                <img 
-                    src={productImageUrl} 
-                    alt="product" 
-                    loading="lazy"
-                />
-                <p>{productName} {productPrice}</p>
-            </ProductImageContainer>
-        </ClientImageContainer>
+                <ProductImageContainer>
+                    <img 
+                        src={productImageUrl} 
+                        alt="product" 
+                        loading="lazy"
+                    />
+                    {/* <p>{productName} {productPrice}</p> */}
+                </ProductImageContainer>
+            </ClientImageContainer>
+        </div>
     )
 }
 

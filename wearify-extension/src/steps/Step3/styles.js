@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 
 export const Step3Image = styled.img`
-    width: 55%;
-    height: 200px;
+    width: 80%;
+    height: 300px;
     object-fit: contain;
     object-position: center;
     display: block;
-    margin: 0 auto;
 
     @media (max-width: 768px) {
         width: min(80%, calc(100vw - 32px));
@@ -20,8 +19,9 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 30px;
+    gap: 0;
+    padding: 20px 0;
+    width: 60%;
 
     h2 {
         font-size: 32.5px;
@@ -29,18 +29,18 @@ export const Container = styled.div`
         color: #000000;
         text-align: center;
         letter-spacing: -0.02em;
-        line-height: 100%;
-        vertical-align: middle;
+        line-height: 1.2;
+        margin: 0;
         font-family: Times New Roman, serif;
     }
 
     p {
         font-size: 16.1px;
-        line-height: 19.32px;
+        line-height: 1.2;
         font-weight: 400;
         color: #000000;
         text-align: center;
-        vertical-align: middle;
+        margin: 0;
         font-family: Times New Roman, serif;
     }
 
@@ -50,8 +50,8 @@ export const Container = styled.div`
         color: #000000;
         text-align: center;
         letter-spacing: -0.02em;
-        line-height: 100%;
-        vertical-align: middle;
+        line-height: 1.2;
+        margin: 0;
         font-family: Times New Roman, serif;
     }
 

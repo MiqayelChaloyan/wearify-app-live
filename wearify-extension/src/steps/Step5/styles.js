@@ -7,16 +7,40 @@ export const ClientImageContainer = styled.div`
   height: 100%;
   width: 100%;
   position: relative;
+  padding: 20px;
+  box-sizing: border-box;
+  min-height: 400px;
 
   @media (max-width: 768px) {
     padding: 16px;
+    min-height: 300px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 12px;
+    min-height: 250px;
   }
 `;
 
 export const ClientImage = styled.img`
   width: 80%;
-  height: 100%;
-  object-fit: cover;
+  max-width: 100%;
+  height: auto;
+  max-height: 70vh;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    width: 90%;
+    max-height: 60vh;
+  }
+
+  @media (max-width: 480px) {
+    width: 95%;
+    max-height: 50vh;
+  }
 `;
 
 const spin = keyframes`
@@ -72,11 +96,12 @@ export const ErrorContainer = styled.div`
 `;
 
 export const ProductImageContainer = styled.div`
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 112px;
   right: 10px;
   width: 126px;
   height: 200px;
+  z-index: 1000;
 
   img {
     width: 126px;
@@ -100,12 +125,11 @@ export const ProductImageContainer = styled.div`
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    vertical-align: middle;
-    font-family: Times New Roman, serif;
+    line-height: 1.2;
   }
 
   @media (max-width: 768px) {
-    top: 16px;
+    top: 20px;
     right: 16px;
     width: 100px;
     height: 160px;

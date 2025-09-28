@@ -10,7 +10,7 @@ export const ModalOverlay = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
-  z-index: 1000;
+  z-index: 999999;
   animation: fadeIn 0.2s ease-out;
 
   @media (max-width: 768px) {
@@ -30,6 +30,7 @@ export const ModalContainer = styled.div`
   overflow: hidden;
   margin: 8px 8px 0 0;
   position: relative;
+  z-index: 999999;
 
   @media (max-width: 768px) {
     margin: 8px;
@@ -54,6 +55,19 @@ export const ModalHeader = styled.div`
 export const ModalDivider = styled.div`
   border-bottom: 2px solid #e5e7eb;
   margin: 0 24px;
+  width: calc(100% - 48px);
+  min-height: 2px;
+  display: block;
+
+  @media (max-width: 768px) {
+    margin: 0 16px;
+    width: calc(100% - 32px);
+  }
+
+  @media (max-width: 480px) {
+    margin: 0 12px;
+    width: calc(100% - 24px);
+  }
 `;
 
 export const ModalTitle = styled.h3`
@@ -92,16 +106,25 @@ export const ModalClose = styled.button`
 `;
 
 export const ModalContent = styled.div`
-  overflow-y: hidden;
-  height: 75%;
+  overflow: hidden;
+  height: 80%;
   max-height: 75vh;
   background-color: #ffffff;
-  padding: 30px 0;
+  padding: 30px 0 50px 0;
+  box-sizing: border-box;
 
   @media (max-width: 768px) {
-    padding: 16px;
+    padding: 16px 16px 60px 16px;
     height: calc(100% - 140px);
     max-height: calc(100% - 140px);
+    overflow: hidden;
+  }
+
+  @media (max-width: 480px) {
+    padding: 12px 12px 70px 12px;
+    height: calc(100% - 120px);
+    max-height: calc(100% - 120px);
+    overflow: hidden;
   }
 `;
 
@@ -124,7 +147,7 @@ export const ModalNext = styled.button`
   padding: 10px 20px;
   border-radius: 5px;
   font-size: 15.2px;
-  font-weight: 600;
+  font-weight: 600 !important;
   width: 153px;
   height: 50px;
   display: flex;
@@ -133,7 +156,7 @@ export const ModalNext = styled.button`
   line-height: 100%;
   justify-content: center;
   cursor: pointer;
-  font-family: Times New Roman, Regular;
+  font-family: Times New Roman, Regular !important;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -184,7 +207,7 @@ export const ConfirmOverlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1100;
+  z-index: 999999;
 `;
 
 export const ConfirmContainer = styled.div`

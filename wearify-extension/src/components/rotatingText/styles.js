@@ -2,13 +2,13 @@ import styled from 'styled-components';
 
 export const WordsWrapper = styled.h2`
   font-size: 32.5px;
-  font-weight: 400;
+  font-weight: 400 !important;
   color: #000000;
   text-align: center;
   letter-spacing: -0.02em;
   line-height: 100%;
   vertical-align: middle;
-  font-family: Times New Roman, serif;
+  font-family: Times New Roman, serif !important;
   width: 100%;
 
   @media (max-width: 768px) {
